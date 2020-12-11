@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Сергей Кулагин](https://up.htmlacademy.ru/php/12/user/1539089).
-* Наставник: `Неизвестно`.
+* Наставник: [Виктор Лаптев] (https://htmlacademy.ru/profile/id123560).
 
 ---
 
