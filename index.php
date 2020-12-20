@@ -59,22 +59,20 @@ $user_name = 'Sergey'; // укажите здесь ваше имя
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
         <?php
-            $categories = [
-                "Доски и лыжи",
-                "Крепления",
-                "Ботинки",
-                "Одежда",
-                "Инструменты",
-                "Разное"];
-                ?>
+        $categories = [
+            "Доски и лыжи",
+            "Крепления",
+            "Ботинки",
+            "Одежда",
+            "Инструменты",
+            "Разное"
+        ];
+        ?>
             <!--заполните этот список из массива категорий-->
             <li class="promo__item promo__item--boards">
             <?php
-                $index = 0;
-                $num = count($categories);
-                foreach ($categories as $value): ?>
-                    <a class="promo__link" href="pages/all-lots.html"><?=$categories[$index];?></a>
-                    <?php $index++; ?>
+                foreach ($categories as $val): ?>
+                    <a class="promo__link" href="pages/all-lots.html"><?=$val;?></a> 
                 <?php endforeach; ?>   
             </li>
         </ul>
@@ -86,31 +84,43 @@ $user_name = 'Sergey'; // укажите здесь ваше имя
         <ul class="lots__list">
             <?php
             $staff = [
-                ['name' => '2014 Rossignol District Snowboard',
+                [
+                    'name' => '2014 Rossignol District Snowboard',
                  'category' => 'Доски и лыжи',
                  'price' => 10999,
-                 'image' => 'img/lot-1.jpg'],
-                 ['name' => 'DC Ply Mens 2016/2017 Snowboard',
+                 'image' => 'img/lot-1.jpg'
+                ],
+                [
+                     'name' => 'DC Ply Mens 2016/2017 Snowboard',
                  'category' => 'Доски и лыжи',
                  'price' => 159999,
-                 'image' => 'img/lot-2.jpg'],
-                 ['name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
+                 'image' => 'img/lot-2.jpg'
+                ],
+                [
+                     'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
                  'category' => 'Крепления',
                  'price' => 8000,
-                 'image' => 'img/lot-3.jpg'],
-                 ['name' => 'Ботинки для сноуборда DC Mutiny Charocal',
+                 'image' => 'img/lot-3.jpg'
+                ],
+                [
+                     'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
                  'category' => 'Ботинки',
                  'price' => 10999,
-                 'image' => 'img/lot-4.jpg'],
-                 ['name' => 'Куртка для сноуборда DC Mutiny Charocal',
+                 'image' => 'img/lot-4.jpg'
+                ],
+                [
+                     'name' => 'Куртка для сноуборда DC Mutiny Charocal',
                  'category' => 'Одежда',
                  'price' => 7500,
-                 'image' => 'img/lot-5.jpg'],
-                 ['name' => 'Маска Oakley Canopy',
+                 'image' => 'img/lot-5.jpg'
+                ],
+                [
+                     'name' => 'Маска Oakley Canopy',
                  'category' => 'Разное',
                  'price' => 5400,
-                 'image' => 'img/lot-6.jpg']
-            ] ?>
+                 'image' => 'img/lot-6.jpg'
+                ],
+            ]; ?>
             <!--заполните этот список из массива с товарами-->
             <li class="lots__item lot">
             <?php foreach ($staff as $key => $val): ?>
@@ -143,11 +153,8 @@ $user_name = 'Sergey'; // укажите здесь ваше имя
             <!--заполните этот список из массива категорий-->
             <li class="nav__item">
             <?php
-                $index = 0;
-                $num = count($categories);
-                foreach ($categories as $value): ?> 
-                    <a class="promo__link" href="pages/all-lots.html"><?=$categories[$index];?></a>
-                    <?php $index++; ?>
+                foreach ($categories as $val): ?> 
+                    <a class="promo__link" href="pages/all-lots.html"><?=$val;?></a>
                 <?php endforeach; ?>
             </li>
         </ul>
