@@ -1,6 +1,3 @@
-<?php
-$is_auth = rand(0, 1);
-?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -57,11 +54,10 @@ $is_auth = rand(0, 1);
     <footer class="main-footer">
         <nav class="nav">
             <ul class="nav__list container">
-                <!--заполните этот список из массива категорий-->
                 <li class="nav__item">
                     <?php
                     foreach ($categories as $val) : ?>
-                        <a class="promo__link" href="pages/all-lots.html"><?= $val; ?></a>
+                        <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val); ?></a>
                     <?php endforeach; ?>
                 </li>
             </ul>

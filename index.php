@@ -1,4 +1,5 @@
 <?php
+$is_auth = rand(0, 1);
 $staff = [
     [
         'name' => '2014 Rossignol District Snowboard',
@@ -45,11 +46,20 @@ $categories = [
     "Инструменты",
     "Разное"
 ];
+function lot_price($x)
+{
+    $x = ceil($x);
+    if ($x >= 1000) {
+        $x = number_format($x, 0, '.', ' ');
+    }
+
+    return $x . ' ' . '₽';
+}
 require_once('helpers.php');
 $main_content = include_template(
-    'main.php', 
+    'main.php',
     [
-        'staff' => $staff, 
+        'staff' => $staff,
         'categories' => $categories
     ]
 );
@@ -57,7 +67,8 @@ $layout_content = include_template(
     'layout.php',
     [
         'content' => $main_content, 'page_name' => 'Главная', 'user_name' => 'Сергей',
-        'categories' => $categories
+        'categories' => $categories,
+        'is_auth' => $is_auth
     ]
 );
 print($layout_content);
