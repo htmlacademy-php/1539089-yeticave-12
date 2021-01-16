@@ -1,3 +1,14 @@
+<?php
+function lot_price($x)
+{
+    $x = ceil($x);
+    if ($x >= 1000) {
+        $x = number_format($x, 0, '.', ' ');
+    }
+
+    return $x . ' ' . '₽';
+}
+?>
 <main class="container">
     <section class="promo">
         <h2 class="promo__title">Нужен стафф для катки?</h2>

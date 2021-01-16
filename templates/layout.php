@@ -1,3 +1,6 @@
+<?php
+$is_auth = rand(0, 1);
+?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -117,4 +120,5 @@
     <script src="flatpickr.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
