@@ -41,9 +41,13 @@ function lot_price($x)
                                 <span class="lot__amount">Стартовая цена</span>
                                 <?php require_once('index.php') ?>
                                 <span class="lot__cost"><?= htmlspecialchars(lot_price($val['price'])); ?></span>
-                            </div>
-                            <div class="lot__timer timer">
-                                12:23
+                            </div><?php
+                                    require_once('helpers.php');
+                                    $date = time_to_dead($val['time']); ?>
+                            <div class="lot__timer timer <?php if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
+                                <?php
+                                print $date[0] . ':' . $date[1];
+                                ?>
                             </div>
                         </div>
                     </div>

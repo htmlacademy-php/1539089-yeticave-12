@@ -144,3 +144,22 @@ function include_template($name, array $data = []) {
 }
 
 
+/**
+ * Принимает дату , выводит оставшееся время до неё в массиве [HH, MM]
+ * $y,$z -Часы и минуты.
+ * $hours, $minutes - дополняет '0', если получившееся число меньше 10 
+ */
+
+
+function time_to_dead ($x) {
+    $x = strtotime($x);
+    $time_now = time();
+
+    $y = floor(($x-$time_now)/3600);
+    $z = ceil((((($x-$time_now)/3600)-$y)*60));
+
+    $hours = str_pad($y, 2, "0", STR_PAD_LEFT);
+    $minutes = str_pad($z, 2, "0", STR_PAD_LEFT);
+    
+    return [$hours, $minutes];
+}
