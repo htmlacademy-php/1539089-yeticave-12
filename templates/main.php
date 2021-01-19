@@ -43,8 +43,12 @@ function lot_price($x)
                                 <span class="lot__cost"><?= htmlspecialchars(lot_price($val['price'])); ?></span>
                             </div><?php
                                     require_once('helpers.php');
-                                    $date = time_to_dead($val['time']); ?>
-                            <div class="lot__timer timer <?php if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
+                                    // С помощью htmlspecialchars не могу тут обработать, т.к. функция возвращает массив
+                                    $date = (time_to_dead($val['time'])); ?>
+                            <div class="lot__timer timer 
+                            <?php
+                            // Добавляем класс, в зависимости от возвращаемого значения
+                             if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
                                 <?php
                                 print $date[0] . ':' . $date[1];
                                 ?>
