@@ -1,4 +1,6 @@
 <?php
+require_once('helpers.php');
+require_once('index.php');
 function lot_price($x)
 {
     $x = ceil($x);
@@ -28,35 +30,44 @@ function lot_price($x)
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
+        
+        
+        <?php
+        foreach ($staff as $key => $val) : ?>
+        <!-- Хотел сделать всё в одном теге, но обнаруживает нежданынй endforeach, оставил так -->
+        <?php 
+        $date = (time_to_dead($val['time']));
+        if ($date[0] > 1) :  ?>
+        
             <li class="lots__item lot">
-                <?php foreach ($staff as $key => $val) : ?>
+                
                     <div class="lot__image">
                         <img src="<?= htmlspecialchars($val['image']); ?>" width="350" height="260" alt="">
                     </div>
                     <div class="lot__info">
                         <span class="lot__category"><?= htmlspecialchars($val['category']); ?></span>
                         <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?= htmlspecialchars($val['name']); ?></a></h3>
-                        <div class="lot__state">
+                        <div class="lot__stat
+                        
+                        e">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
-                                <?php require_once('index.php') ?>
                                 <span class="lot__cost"><?= htmlspecialchars(lot_price($val['price'])); ?></span>
-                            </div><?php
-                                    require_once('helpers.php');
-                                    // С помощью htmlspecialchars не могу тут обработать, т.к. функция возвращает массив
-                                    $date = (time_to_dead($val['time'])); ?>
+                            </div>
                             <div class="lot__timer timer 
                             <?php
                             // Добавляем класс, в зависимости от возвращаемого значения
                              if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
                                 <?php
-                                print $date[0] . ':' . $date[1];
+                               htmlspecialchars(print $date[0] . ':' . $date[1]);
                                 ?>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                
             </li>
+        <?php endif; ?>
+        <?php endforeach; ?>
         </ul>
     </section>
 </main>
