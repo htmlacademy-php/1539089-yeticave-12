@@ -35,7 +35,7 @@ function lot_price($x)
         <!-- не ИЛИ, а И, теперь всё работает) -->
         <?php 
         $date = (time_to_dead($val['time']));
-        if ($date[0] >= 0 and $date[1] > 0) :  ?>
+        if ($date[0] > 0 or ($date[0] >= 0 and $date[1] > 0)) :  ?>
         
             <li class="lots__item lot">
                 
