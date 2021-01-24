@@ -16,13 +16,12 @@ function lot_price($x)
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-
+            <?php
+            foreach ($categories as $val) : ?>
             <li class="promo__item promo__item--boards">
-                <?php
-                foreach ($categories as $val) : ?>
                     <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val); ?></a>
-                <?php endforeach; ?>
             </li>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -33,10 +32,10 @@ function lot_price($x)
         
         <?php
         foreach ($staff as $key => $val) : ?>
-        <!-- Хотел сделать всё в одном теге, но обнаруживает нежданынй endforeach, оставил так -->
+        <!-- не ИЛИ, а И, теперь всё работает) -->
         <?php 
         $date = (time_to_dead($val['time']));
-        if ($date[0] > 1) :  ?>
+        if ($date[0] >= 0 and $date[1] > 0) :  ?>
         
             <li class="lots__item lot">
                 
@@ -56,12 +55,12 @@ function lot_price($x)
                             // Добавляем класс, в зависимости от возвращаемого значения
                              if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
                                 <?php
-                               htmlspecialchars(print $date[0] . ':' . $date[1]);
+                               print htmlspecialchars( $date[0] . ':' . $date[1]);
                                 ?>
                             </div>
                         </div>
                     </div>
-                
+                    
             </li>
         <?php endif; ?>
         <?php endforeach; ?>
