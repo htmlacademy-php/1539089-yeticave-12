@@ -1,4 +1,6 @@
 <?php
+require_once('helpers.php');
+require_once('index.php');
 function lot_price($x)
 {
     $x = ceil($x);
@@ -14,13 +16,12 @@ function lot_price($x)
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-
+            <?php
+            foreach ($categories as $val) : ?>
             <li class="promo__item promo__item--boards">
-                <?php
-                foreach ($categories as $val) : ?>
                     <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val); ?></a>
-                <?php endforeach; ?>
             </li>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -28,8 +29,16 @@ function lot_price($x)
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
+        
+        <?php
+        foreach ($staff as $key => $val) : ?>
+        <!-- не ИЛИ, а И, теперь всё работает) -->
+        <?php 
+        $date = (time_to_dead($val['time']));
+        if ($date[0] > 0 or ($date[0] >= 0 and $date[1] > 0)) :  ?>
+        
             <li class="lots__item lot">
-                <?php foreach ($staff as $key => $val) : ?>
+                
                     <div class="lot__image">
                         <img src="<?= htmlspecialchars($val['image']); ?>" width="350" height="260" alt="">
                     </div>
@@ -39,16 +48,22 @@ function lot_price($x)
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount">Стартовая цена</span>
-                                <?php require_once('index.php') ?>
                                 <span class="lot__cost"><?= htmlspecialchars(lot_price($val['price'])); ?></span>
                             </div>
-                            <div class="lot__timer timer">
-                                12:23
+                            <div class="lot__timer timer 
+                            <?php
+                            // Добавляем класс, в зависимости от возвращаемого значения
+                             if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
+                                <?php
+                               print htmlspecialchars( $date[0] . ':' . $date[1]);
+                                ?>
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                    
             </li>
+        <?php endif; ?>
+        <?php endforeach; ?>
         </ul>
     </section>
 </main>

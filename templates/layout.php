@@ -57,12 +57,14 @@ $is_auth = rand(0, 1);
     <footer class="main-footer">
         <nav class="nav">
             <ul class="nav__list container">
-                <li class="nav__item">
-                    <?php
+            <?php
                     foreach ($categories as $val) : ?>
+                <li class="nav__item">
+                    
                         <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val); ?></a>
-                    <?php endforeach; ?>
+                   
                 </li>
+                <?php endforeach; ?>
             </ul>
         </nav>
         <div class="main-footer__bottom container">

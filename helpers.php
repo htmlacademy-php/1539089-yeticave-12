@@ -144,3 +144,23 @@ function include_template($name, array $data = []) {
 }
 
 
+/**
+ * Принимает дату , выводит оставшееся время до неё в массиве [HH, MM]
+ * $lot_time - принимаемое значение даты, разницу с которым надо найти
+ * $hours,$minutes -Часы и минуты.
+ * $hours_str, $minutes_str - дополняет '0', если получившееся число меньше 10 
+ */
+
+
+function time_to_dead ($lot_time) {
+    $lot_time = strtotime($lot_time);
+    $time_now = time();
+
+    $hours = floor(($lot_time-$time_now)/3600);
+    $minutes = ceil((((($lot_time-$time_now)/3600)-$hours)*60));
+
+    $hours_str = str_pad($hours, 2, "0", STR_PAD_LEFT);
+    $minutes_str = str_pad($minutes, 2, "0", STR_PAD_LEFT);
+    
+    return [$hours_str, $minutes_str];
+}
