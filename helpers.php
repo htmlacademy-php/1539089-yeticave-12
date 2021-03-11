@@ -159,7 +159,7 @@ function time_to_dead ($lot_time) {
     $hours = floor(($lot_time-$time_now)/3600);
     $minutes = ceil((((($lot_time-$time_now)/3600)-$hours)*60));
 
-    if ($minutes == 60){            /* Если исользовать строгое сравнение '===' то не работает */
+    if ($minutes === 60.0){            /* Если исользовать строгое сравнение '===' то не работает */
         $hours_str = str_pad($hours + 1, 2, "0", STR_PAD_LEFT);
         $minutes_str = '00';
         return [$hours_str, $minutes_str];

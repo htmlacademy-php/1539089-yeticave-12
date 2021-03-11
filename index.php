@@ -33,7 +33,7 @@ $staff = [
         'category' => 'Одежда',
         'price' => 7500,
         'image' => 'img/lot-5.jpg',
-        'time' => '2021-02-24 10:39 am'
+        'time' => '2021-03-13 10:24 am'
     ],
     [
         'name' => 'Маска Oakley Canopy',

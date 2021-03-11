@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_password` varchar(64) DEFAULT NULL,
   `user_contact` text,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_users` (`user_name`,`email`)
+  UNIQUE KEY `unique_usermane` (`user_name`),
+  UNIQUE KEY `unique_useremail` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
