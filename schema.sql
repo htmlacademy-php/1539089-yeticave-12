@@ -25,20 +25,9 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `symbol_code` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_category` (`category_name`,`symbol_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO categories (category_name, symbol_code)
-VALUES ('Доски и лыжи', 'boards');
-INSERT INTO categories (category_name, symbol_code)
-VALUES ('Крепления', 'attachment');
-INSERT INTO categories (category_name, symbol_code)
-VALUES ('Ботинки', 'boots');
-INSERT INTO categories (category_name, symbol_code)
-VALUES ('Одежда', 'clothing');
-INSERT INTO categories (category_name, symbol_code)
-VALUES ('Инструменты', 'tools');
-INSERT INTO categories (category_name, symbol_code)
-VALUES ('Разное', 'other');
+
 
 -- Экспортируемые данные не выделены.
 
@@ -64,9 +53,9 @@ DROP TABLE IF EXISTS `lots`;
 CREATE TABLE IF NOT EXISTS `lots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date_create` timestamp NOT NULL,
-  `lot_name` varchar(30) DEFAULT NULL,
+  `lot_name` varchar(255) DEFAULT NULL,
   `description` varchar(128) DEFAULT NULL,
-  `image` varchar(512) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `start_price` int(11) NOT NULL,
   `date_dead` timestamp NOT NULL,
   `rate_step` int(11) NOT NULL,
