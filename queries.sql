@@ -34,9 +34,9 @@ VALUES (NOW(), 11099, 1, 2),
        (NOW(), 160199, 2, 1); 
 
 
--- получение всех категорий
+-- получение всех категорий, для корректного отображения на сайте расставил по id
 
-SELECT * FROM `categories`;
+SELECT * FROM `categories` ORDER BY id; 
 
 -- получить самые новые, открытые лоты.
 
@@ -51,7 +51,7 @@ SELECT lot_name, start_price, image, category_name, rate_sum
         WHERE ra.lot_id = lots.id
         ORDER BY ra.rate_sum DESC LIMIT 1
 )
-WHERE lots.winner_id IS NULL AND date_dead > NOW() ORDER BY date_create;
+WHERE lots.winner_id IS NULL AND date_dead > NOW() ORDER BY date_create DESC;
 
 
 -- получить лот по его id, так же название категории, к которой он принадлежит
