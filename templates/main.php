@@ -16,7 +16,7 @@ function lot_price($x)
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <?php
-            foreach ($categories_array as $key => $val) : ?>
+            foreach ($categories as $key => $val) : ?>
             <li class="promo__item promo__item--<?= htmlspecialchars($val['symbol_code']); ?>">
                     <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val['category_name']); ?></a>
             </li>
@@ -30,7 +30,7 @@ function lot_price($x)
         <ul class="lots__list">
         
         <?php
-        foreach ($lots_array as $key => $val) : ?>
+        foreach ($lots as $key => $val) : ?>
         <!-- не ИЛИ, а И, теперь всё работает) -->
         <?php 
         $date = (time_to_dead($val['date_dead']));

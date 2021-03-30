@@ -1,12 +1,43 @@
 <?php
 date_default_timezone_set('Asia/Sakhalin'); // Устанавливаю время на время БД, иначе начинает некорректно считать минуты
-require_once('helpers.php'); // Подключаю ф-ии и запросы к БД из этого файла
-// Можно как вариант к БД отсюда подключаться, и вот вопрос у меня как лучше это делать?
+require_once('helpers.php'); // Подключаю ф-ии 
+// Подключение к БД
+
+$con = mysqli_connect("127.0.0.1", "root", "root", "yety");
+
+mysqli_set_charset($con, "utf8");
+
+// Запрос на получение лотов
+
+$query_lots = "SELECT lot_name, start_price, image, date_dead, category_name, rate_sum
+FROM lots 
+INNER JOIN categories
+ON category_id = categories.id
+LEFT JOIN rates 
+ON rates.id = (
+    SELECT ra.id
+    FROM rates ra
+    WHERE ra.lot_id = lots.id
+    ORDER BY ra.rate_sum DESC LIMIT 1
+)
+WHERE lots.winner_id IS NULL AND date_dead > NOW() ORDER BY date_create DESC;";
+
+$lots_resourse = mysqli_query($con, $query_lots);
+
+$lots = mysqli_fetch_all($lots_resourse, MYSQLI_ASSOC);
+
+// Запрос на получение категорий
+
+$query_categories = "SELECT * FROM `categories` ORDER BY id;";
+
+$categories_resourse = mysqli_query($con, $query_categories);
+
+$categories = mysqli_fetch_all($categories_resourse, MYSQLI_ASSOC);
 $main_content = include_template(                //Передаю в шаблон
     'main.php',                                 
     [
-        'lots_array' => $lots_array,
-        'categories_array' => $categories_array,
+        'lots' => $lots,
+        'categories' => $categories,
     ]
 
 );
@@ -14,7 +45,7 @@ $layout_content = include_template(             // Передаю в шабло�
     'layout.php',
     [
         'content' => $main_content, 'page_name' => 'Главная', 'user_name' => 'Сергей',
-        'categories_array' => $categories_array,
+        'categories' => $categories,
     ]
 );
 print($layout_content);
