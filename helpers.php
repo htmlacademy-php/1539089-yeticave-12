@@ -172,3 +172,6 @@ function time_to_dead ($lot_time) {
     }
     
 }
+
+
+

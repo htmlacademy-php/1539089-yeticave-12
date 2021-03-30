@@ -58,10 +58,10 @@ $is_auth = rand(0, 1);
         <nav class="nav">
             <ul class="nav__list container">
             <?php
-                    foreach ($categories as $val) : ?>
+                    foreach ($categories as $key => $val) : ?>
                 <li class="nav__item">
                     
-                        <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val); ?></a>
+                        <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val['category_name']); ?></a>
                    
                 </li>
                 <?php endforeach; ?>
