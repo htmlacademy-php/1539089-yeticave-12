@@ -126,8 +126,8 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template($name, array $data = []) {
-    $name = 'templates/' . $name;
+function include_template($name, array $data = []) {                                                  
+    $name = 'templates/'. $name; 
     $result = '';
 
     if (!is_readable($name)) {
@@ -159,7 +159,7 @@ function time_to_dead ($lot_time) {
     $hours = floor(($lot_time-$time_now)/3600);
     $minutes = ceil((((($lot_time-$time_now)/3600)-$hours)*60));
 
-    if ($minutes === 60.0){            /* Если исользовать строгое сравнение '===' то не работает */
+    if ($minutes === 60.0){            // Если исользовать строгое сравнение '===' то не работает
         $hours_str = str_pad($hours + 1, 2, "0", STR_PAD_LEFT);
         $minutes_str = '00';
         return [$hours_str, $minutes_str];
@@ -173,5 +173,16 @@ function time_to_dead ($lot_time) {
     
 }
 
+function connection() {  //Функция на подключение к БД
 
+    $con = mysqli_connect("127.0.0.1", "root", "root", "yety");
+    mysqli_set_charset($con, "utf8"); // не уверен, применяется ли кодировка везде, куда я передаю
+    if ($con == false){
+        print ("Ошибка подключения: " . mysqli_connect_error());
+    }
+    /* else {                                 
+        print ("Соединение установлено");
+    }   */
+    return $con;
+}
 

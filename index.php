@@ -3,13 +3,11 @@ date_default_timezone_set('Asia/Sakhalin'); // Устанавливаю врем
 require_once('helpers.php'); // Подключаю ф-ии 
 // Подключение к БД
 
-$con = mysqli_connect("127.0.0.1", "root", "root", "yety");
+$con = connection(); // Получаем подключение к БД
 
-mysqli_set_charset($con, "utf8");
+// Запрос на получение лотов, если запращивать просто id, то возникает ошибка (видимо потому что id есть во всех таблицах), поэтому запросил всё из лотов
 
-// Запрос на получение лотов
-
-$query_lots = "SELECT lot_name, start_price, image, date_dead, category_name, rate_sum
+$query_lots = "SELECT lots.*, category_name, rate_sum  
 FROM lots 
 INNER JOIN categories
 ON category_id = categories.id
@@ -33,6 +31,7 @@ $query_categories = "SELECT * FROM `categories` ORDER BY id;";
 $categories_resourse = mysqli_query($con, $query_categories);
 
 $categories = mysqli_fetch_all($categories_resourse, MYSQLI_ASSOC);
+
 $main_content = include_template(                //Передаю в шаблон
     'main.php',                                 
     [
