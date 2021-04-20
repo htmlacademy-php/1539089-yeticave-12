@@ -2,14 +2,11 @@
     require_once('helpers.php');
     date_default_timezone_set('Asia/Sakhalin');
     $con = connection();
-    $error_404 = include_template (
-        '404.php'
-    );
-    if (!isset($_GET['lot_id']) || !ctype_digit($_GET['lot_id']) ) { 
-        http_response_code(404);
-        print ($error_404);
+   
+    if (!isset($_GET['id']) || !ctype_digit($_GET['id']) ) { 
+        return error404();
     }
-        $lot_id = filter_input(INPUT_GET, 'lot_id', FILTER_SANITIZE_NUMBER_INT);
+        $lot_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
         $query_lot = "SELECT lots.*, category_name, rate_sum   
         FROM lots
@@ -29,8 +26,7 @@
         $lot_info = mysqli_fetch_all($lot_resourse, MYSQLI_ASSOC);
 
         if (empty($lot_info)){
-            http_response_code(404);
-            print ($error_404);
+            return error404();
         }
             $lotpage_content = include_template(
                 'lotpage.php',
@@ -39,5 +35,3 @@
                     ]
             );
             print ($lotpage_content);
-    
-?>

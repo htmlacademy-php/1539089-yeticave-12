@@ -176,7 +176,7 @@ function time_to_dead ($lot_time) {
 function connection() {  //Функция на подключение к БД
 
     $con = mysqli_connect("127.0.0.1", "root", "root", "yety");
-    mysqli_set_charset($con, "utf8"); // не уверен, применяется ли кодировка везде, куда я передаю
+    mysqli_set_charset($con, "utf8"); // не уверен, применяется ли кодировка везде, куда я передаю(да, тк.к ресурс соединения устанавливается в $con)
     if ($con == false){
         print ("Ошибка подключения: " . mysqli_connect_error());
     }
@@ -184,5 +184,13 @@ function connection() {  //Функция на подключение к БД
         print ("Соединение установлено");
     }   */
     return $con;
+}
+
+function error404() {               // вывод 404, вызывается return error404();
+    $error_404 = include_template (
+        '404.php'
+    );
+    http_response_code(404);
+    print ($error_404);
 }
 

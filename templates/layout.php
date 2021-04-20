@@ -1,4 +1,5 @@
 <?php
+require_once('helpers.php');
 $is_auth = rand(0, 1);
 ?>
 <!DOCTYPE html>
@@ -57,14 +58,12 @@ $is_auth = rand(0, 1);
     <footer class="main-footer">
         <nav class="nav">
             <ul class="nav__list container">
-            <?php
-                    foreach ($categories as $key => $val) : ?>
-                <li class="nav__item">
-                    
-                        <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val['category_name']); ?></a>
-                   
-                </li>
-                <?php endforeach; ?>
+                <?php //получаем список категорий с версткой из шаблона
+                $categories_list = include_template(
+                    'categories_list.php'
+                );
+                print $categories_list;
+                ?>
             </ul>
         </nav>
         <div class="main-footer__bottom container">
