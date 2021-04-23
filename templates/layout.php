@@ -58,10 +58,7 @@ $is_auth = rand(0, 1);
     <footer class="main-footer">
         <nav class="nav">
             <ul class="nav__list container">
-                <?php //получаем список категорий с версткой из шаблона
-                $categories_list = include_template(
-                    'categories_list.php'
-                );
+            <?php //получаем список категорий с версткой из шаблона
                 print $categories_list;
                 ?>
             </ul>

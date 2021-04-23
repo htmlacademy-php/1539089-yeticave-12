@@ -23,18 +23,24 @@ $lots_resourse = mysqli_query($con, $query_lots);
 
 $lots = mysqli_fetch_all($lots_resourse, MYSQLI_ASSOC);
 
+$header_categories = include_template(  //Подключаем шаблон категорий с картинками
+    'main_header_categories_list.php'
+);
+
+$categories_list = include_template(    //Подключаем шаблон категорий без картинок
+    'categories_list.php'
+);
+
 $main_content = include_template(       
     'main.php',
     [
-        'lots' => $lots
-
+        'lots' => $lots, 'header_categories' => $header_categories
     ]
-
 );
 $layout_content = include_template(             
     'layout.php',
     [
-        'content' => $main_content, 'page_name' => 'Главная', 'user_name' => 'Сергей'
+        'content' => $main_content, 'categories_list' => $categories_list, 'page_name' => 'Главная', 'user_name' => 'Сергей'
 
     ]
 );

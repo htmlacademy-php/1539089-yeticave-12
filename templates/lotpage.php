@@ -42,11 +42,8 @@
     <main>
       <nav class="nav">
         <ul class="nav__list container">
-          <?php //получаем список категорий с версткой из шаблона
-          $categories_list = include_template(
-            'categories_list.php'
-          );
-          print $categories_list;
+          <?php 
+           print $lotpage_categories;
           ?>
         </ul>
       </nav>
@@ -102,9 +99,9 @@
   <footer class="main-footer">
     <nav class="nav">
       <ul class="nav__list container">
-        <?php 
-        print $categories_list;
-        ?>
+          <?php 
+           print $lotpage_categories;
+          ?>
       </ul>
     </nav>
     <div class="main-footer__bottom container">

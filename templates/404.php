@@ -42,10 +42,7 @@ require_once('helpers.php');
         <main>
             <nav class="nav">
                 <ul class="nav__list container">
-                    <?php //получаем список категорий с версткой из шаблона
-                    $categories_list = include_template(
-                        'categories_list.php'
-                    );
+                    <?php 
                     print $categories_list;
                     ?>
             </nav>

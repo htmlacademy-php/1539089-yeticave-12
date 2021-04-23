@@ -3,13 +3,8 @@ date_default_timezone_set('Asia/Sakhalin'); // Устанавливаю врем
 require_once('helpers.php'); // Подключаю ф-ии 
 // Подключение к БД
 
-$con = connection(); // Получаем подключение к БД
 
-$query_categories = "SELECT * FROM `categories` ORDER BY id;";
-
-$categories_resourse = mysqli_query($con, $query_categories);
-
-$categories = mysqli_fetch_all($categories_resourse, MYSQLI_ASSOC);
+$categories = categories_array();
 
 foreach ($categories as $key => $val) : ?>
     <li class="nav__item">

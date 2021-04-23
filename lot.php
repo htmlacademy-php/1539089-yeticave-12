@@ -28,10 +28,13 @@
         if (empty($lot_info)){
             return error404();
         }
-            $lotpage_content = include_template(
-                'lotpage.php',
-                    [
-                        'lot_info' => $lot_info
-                    ]
-            );
-            print ($lotpage_content);
+        $lotpage_categories = include_template (
+            'categories_list.php'
+        );
+        $lotpage_content = include_template(
+            'lotpage.php',
+                [
+                    'lot_info' => $lot_info, 'lotpage_categories' => $lotpage_categories
+                ]
+        );
+        print ($lotpage_content);

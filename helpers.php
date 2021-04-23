@@ -186,11 +186,27 @@ function connection() {  //Функция на подключение к БД
     return $con;
 }
 
-function error404() {               // вывод 404, вызывается return error404();
+function error404() {           // вывод 404, вызывается return error404();
+    $categories_list = include_template(  //Получаем категории из шаблона
+        'categories_list.php'
+    );              
     $error_404 = include_template (
-        '404.php'
+        '404.php',
+        [
+            'categories_list' => $categories_list
+        ]
     );
     http_response_code(404);
     print ($error_404);
 }
 
+function categories_array(){        // Получаем категории для навигации
+    $con = connection(); 
+
+    $query_categories = "SELECT * FROM `categories` ORDER BY id;";
+
+    $categories_resourse = mysqli_query($con, $query_categories);
+
+    $categories_array = mysqli_fetch_all($categories_resourse, MYSQLI_ASSOC);
+    return $categories_array;
+}
