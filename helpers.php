@@ -126,8 +126,8 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template($name, array $data = []) {
-    $name = 'templates/' . $name;
+function include_template($name, array $data = []) {                                                  
+    $name = 'templates/'. $name; 
     $result = '';
 
     if (!is_readable($name)) {
@@ -159,7 +159,7 @@ function time_to_dead ($lot_time) {
     $hours = floor(($lot_time-$time_now)/3600);
     $minutes = ceil((((($lot_time-$time_now)/3600)-$hours)*60));
 
-    if ($minutes === 60.0){            /* Если исользовать строгое сравнение '===' то не работает */
+    if ($minutes === 60.0){            // Если исользовать строгое сравнение '===' то не работает
         $hours_str = str_pad($hours + 1, 2, "0", STR_PAD_LEFT);
         $minutes_str = '00';
         return [$hours_str, $minutes_str];
@@ -173,5 +173,40 @@ function time_to_dead ($lot_time) {
     
 }
 
+function connection() {  //Функция на подключение к БД
 
+    $con = mysqli_connect("127.0.0.1", "root", "root", "yety");
+    mysqli_set_charset($con, "utf8"); // не уверен, применяется ли кодировка везде, куда я передаю(да, тк.к ресурс соединения устанавливается в $con)
+    if ($con == false){
+        print ("Ошибка подключения: " . mysqli_connect_error());
+    }
+    /* else {                                 
+        print ("Соединение установлено");
+    }   */
+    return $con;
+}
 
+function error404() {           // вывод 404, вызывается return error404();
+    $categories_list = include_template(  //Получаем категории из шаблона
+        'categories_list.php'
+    );              
+    $error_404 = include_template (
+        '404.php',
+        [
+            'categories_list' => $categories_list
+        ]
+    );
+    http_response_code(404);
+    print ($error_404);
+}
+
+function categories_array(){        // Получаем категории для навигации
+    $con = connection(); 
+
+    $query_categories = "SELECT * FROM `categories` ORDER BY id;";
+
+    $categories_resourse = mysqli_query($con, $query_categories);
+
+    $categories_array = mysqli_fetch_all($categories_resourse, MYSQLI_ASSOC);
+    return $categories_array;
+}

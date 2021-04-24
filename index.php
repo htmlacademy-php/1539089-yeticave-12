@@ -1,15 +1,12 @@
 <?php
 date_default_timezone_set('Asia/Sakhalin'); // Устанавливаю время на время БД, иначе начинает некорректно считать минуты
-require_once('helpers.php'); // Подключаю ф-ии 
-// Подключение к БД
+require_once('helpers.php');
 
-$con = mysqli_connect("127.0.0.1", "root", "root", "yety");
+$con = connection(); // Получаем подключение к БД
 
-mysqli_set_charset($con, "utf8");
+// Запрос на получение лотов,
 
-// Запрос на получение лотов
-
-$query_lots = "SELECT lot_name, start_price, image, date_dead, category_name, rate_sum
+$query_lots = "SELECT lots.*, category_name, rate_sum  
 FROM lots 
 INNER JOIN categories
 ON category_id = categories.id
@@ -26,26 +23,25 @@ $lots_resourse = mysqli_query($con, $query_lots);
 
 $lots = mysqli_fetch_all($lots_resourse, MYSQLI_ASSOC);
 
-// Запрос на получение категорий
-
-$query_categories = "SELECT * FROM `categories` ORDER BY id;";
-
-$categories_resourse = mysqli_query($con, $query_categories);
-
-$categories = mysqli_fetch_all($categories_resourse, MYSQLI_ASSOC);
-$main_content = include_template(                //Передаю в шаблон
-    'main.php',                                 
-    [
-        'lots' => $lots,
-        'categories' => $categories,
-    ]
-
+$header_categories = include_template(  //Подключаем шаблон категорий с картинками
+    'main_header_categories_list.php'
 );
-$layout_content = include_template(             // Передаю в шаблон
+
+$categories_list = include_template(    //Подключаем шаблон категорий без картинок
+    'categories_list.php'
+);
+
+$main_content = include_template(       
+    'main.php',
+    [
+        'lots' => $lots, 'header_categories' => $header_categories
+    ]
+);
+$layout_content = include_template(             
     'layout.php',
     [
-        'content' => $main_content, 'page_name' => 'Главная', 'user_name' => 'Сергей',
-        'categories' => $categories,
+        'content' => $main_content, 'categories_list' => $categories_list, 'page_name' => 'Главная', 'user_name' => 'Сергей'
+
     ]
 );
 print($layout_content);
