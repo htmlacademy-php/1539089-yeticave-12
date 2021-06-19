@@ -40,8 +40,11 @@ $main_content = include_template(
 $layout_content = include_template(             
     'layout.php',
     [
-        'content' => $main_content, 'categories_list' => $categories_list, 'page_name' => 'Главная', 'user_name' => 'Сергей'
-
+        'content' => $main_content, 
+        'is_auth' => $is_auth,
+        'categories_list' => $categories_list, 
+        'page_name' => 'Главная', 
+        'user_name' => 'Сергей'
     ]
 );
 print($layout_content);

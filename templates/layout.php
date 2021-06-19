@@ -1,10 +1,5 @@
-<?php
-require_once('helpers.php');
-$is_auth = rand(0, 1);
-?>
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <title><?= $page_name ?></title>
@@ -27,7 +22,7 @@ $is_auth = rand(0, 1);
                     <input class="main-header__search-btn" type="submit" name="find" value="Найти">
 
                 </form>
-                <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
+                <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
 
                 <nav class="user-menu">
 
