@@ -51,7 +51,8 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 			}
 		}
 		$errors = array_filter($errors);                                   //Оставляем только нужные значения(удаляем все пустые)
-		if (!empty($_FILES['image']['name'])){                
+		if (!empty($_FILES['image']['name'])) {  
+			              
 		$path = $_FILES['image']['name'];
 		$filename = uniqid().$path;
 		$tmp_name = $_FILES['image']['tmp_name'];
@@ -70,17 +71,19 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 			$add_lot_content = include_template(							//Передаем в шаблон с ошибками
 				'add-lot.php',
 				[
+					'header' => $header,
 					'user_name' => 'Сергей',
 					'categories_list' => $categories_list,
 					'categories_dropdown' => $categories_dropdown,
 					'errors' => $errors,
-					'lot_name' => getPOSTval('lot_name'),
-					'category_value' => getPOSTval('category_id'),
-					'description_value' => getPOSTval('description'),
+					'lot_name' => $lot['lot_name'],
+					'category_value' => $lot['category_id'],
+					'description_value' => $lot['description'],
 					'path' => $path,
-					'start_price' => getPOSTval('start_price'),
-					'rate_step' => getPOSTval('rate_step'),
-					'date_dead' => getPOSTval('date_dead'),	
+					'start_price' => $lot['start_price'],
+					'rate_step' => $lot['rate_step'],
+					'date_dead' => $lot['date_dead'],
+					'footer' => $footer
 				]
 			);
 		}
@@ -92,7 +95,7 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 			if ($res) {
 				$lot_id = mysqli_insert_id($con);
 
-			header('Location: lot.php?id='.$lot_id);  // перенаправляем на созданный лот(в chrome сохраняет адрес http://1539089-yeticave-12/add.php/lot.php?id=30 , т.е.не убирает add.php)
+			header('Location: lot.php?id='.$lot_id);  // перенаправляем на созданный лот
 			}
 		}
 	}
@@ -100,9 +103,11 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 		$add_lot_content = include_template(					//При первом открытии страницы
 			'add-lot.php',												
 			[
+				'header' => $header,
 				'user_name' => 'Сергей',
 				'categories_list' => $categories_list,
 				'categories_dropdown' => $categories_dropdown,
+				'footer' => $footer
 			]
 		);
 	}

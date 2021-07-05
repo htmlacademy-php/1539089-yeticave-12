@@ -5,7 +5,7 @@
     $con = connection();
 
     if (!isset($_GET['id']) || !ctype_digit($_GET['id']) ) {
-        return error404();
+        return error404($header, $footer);
     }
         $lot_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
@@ -27,7 +27,7 @@
         $lot_info = mysqli_fetch_all($lot_resourse, MYSQLI_ASSOC);
 
         if (empty($lot_info)){
-            return error404();
+            return error404($header, $footer);
         }
         $lotpage_categories = include_template (
             'categories_list.php'
@@ -35,7 +35,10 @@
         $lotpage_content = include_template(
             'lotpage.php',
                 [
-                    'lot_info' => $lot_info, 'lotpage_categories' => $lotpage_categories
+                    'header' => $header,
+                    'lot_info' => $lot_info, 
+                    'lotpage_categories' => $lotpage_categories,
+                    'footer' => $footer,
                 ]
         );
         print ($lotpage_content);

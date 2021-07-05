@@ -187,20 +187,7 @@ function connection()
 	return $con;
 }
 
-function error404()			// вывод 404, вызывается return error404();
-{           
-	$categories_list = include_template(  //Получаем категории из шаблона
-		'categories_list.php'
-	);
-	$error_404 = include_template(
-		'404.php',
-		[
-			'categories_list' => $categories_list
-		]
-	);
-	http_response_code(404);
-	print($error_404);
-}
+
 
 function get_categories()   // Получаем категории для навигации
 {        
@@ -218,31 +205,31 @@ function get_categories()   // Получаем категории для нав
 */
 function validateCategory($id, $allowed_list)
 {
-	if (!in_array($id, $allowed_list)) {
-		return 'Указана несуществующая категория';
+	if (in_array($id, $allowed_list)) {
+		return false;
 	}
-	return null;
+	return true;
 }
 /*
 Валидация цифровых значений цены
-возвращает null, когда $val число и при этом все символы в $val являются числовыми
+возвращает false, когда $val число и при этом все символы в $val являются числовыми
 */
 function validatePrice($val){
 	if (is_numeric($val) && ctype_digit($val)){
-		return null;
+		return false;
 	}
-	return "Введите целое число больше нуля";
+	return true;
 }
 /*
 Валидация даты
-возвращает null, когда $val проходит проверку is_date_valid и при этом больше текущей даты
+возвращает false, когда $val проходит проверку is_date_valid и при этом больше текущей даты
 */
 function validateDate($val){
 	$date_now = date("Y-m-d");
 	if (is_date_valid($val) == 1 && $val > $date_now){
-		return null;
+		return false;
 	}
-	return 'Введите дату в формате ГГГГ-ММ-ДД';
+	return true;
 }
 /**Возвращает введенное пользователем значение
  * $name - имя атрибута, значение которого необходимо вернуть
@@ -255,3 +242,37 @@ function getPOSTval($name)
 }
 
 $is_auth = rand(0,1);  //Определил здесь, для выполнения пункта ТЗ "Страница доступна только аутентифицированным пользователям."
+
+
+
+$header = include_template(        //Подключение шаблона header(нужно сделать кнопку неактивной, когда находимcя на главной)
+	'header.php',
+	[
+		'is_auth' => $is_auth
+	]
+);
+
+$categories_list = include_template(    //Подключаем шаблон категорий без картинок
+    'categories_list.php'
+);
+
+$footer = include_template(
+	'footer.php',
+	[
+		'categories_list' => $categories_list
+	]
+);
+
+
+function error404($header,$footer)			// вывод 404, вызывается return error404();
+{           
+	
+	$error_404 = include_template(
+		'404.php', [
+			'header' => $header,
+			'footer' => $footer
+		]
+	);
+	http_response_code(404);
+	print($error_404);
+}
