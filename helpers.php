@@ -201,45 +201,28 @@ function get_categories()   // Получаем категории для нав
 	return $categories_array;
 }
 /*
-Валидация категорий, если $id нет в массиве $allowed_list вернет ошибку
+Валидация категорий, возвращает true, если $id есть в массиве $allowed_list 
 */
 function validateCategory($id, $allowed_list)
 {
-	if (in_array($id, $allowed_list)) {
-		return false;
-	}
-	return true;
+	return(in_array($id, $allowed_list));
 }
 /*
 Валидация цифровых значений цены
-возвращает false, когда $val число и при этом все символы в $val являются числовыми
+возвращает true, когда $val число и при этом все символы в $val являются числовыми
 */
 function validatePrice($val){
-	if (is_numeric($val) && ctype_digit($val)){
-		return false;
-	}
-	return true;
+	return is_numeric($val) && ctype_digit($val);
 }
 /*
 Валидация даты
-возвращает false, когда $val проходит проверку is_date_valid и при этом больше текущей даты
+возвращает true, когда $val проходит проверку is_date_valid и при этом больше текущей даты
 */
 function validateDate($val){
 	$date_now = date("Y-m-d");
-	if (is_date_valid($val) == 1 && $val > $date_now){
-		return false;
-	}
-	return true;
+	return(is_date_valid($val) == 1 && $val > $date_now);
 }
-/**Возвращает введенное пользователем значение
- * $name - имя атрибута, значение которого необходимо вернуть
- * ?? - оператор объединения с null, возвращает $_POST['$name'] если он был задан и не равен null
- * в противном случае возвращает ''
- */
-function getPOSTval($name)
-{
-	return $_POST[$name] ?? '';
-}
+
 
 $is_auth = rand(0,1);  //Определил здесь, для выполнения пункта ТЗ "Страница доступна только аутентифицированным пользователям."
 

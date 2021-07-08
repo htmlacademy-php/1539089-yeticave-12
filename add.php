@@ -15,19 +15,19 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 				return !isset($value);
 			},
 			'category_id' => function ($value) use ($categories_id_list) {  
-				return validateCategory($value, $categories_id_list);                
+				return !validateCategory($value, $categories_id_list);      //если валидация вернула true, то меняет на false, чтобы не записалось в ошибки          
 			},
 			'description' => function($value){
 				return !isset($value);
 			},
 			'start_price' => function ($value){
-				return validatePrice($value);
+				return !validatePrice($value);                              //если валидация вернула false, то меняет на true, чтобы ушло в ошибки
 			},
 			'rate_step' => function	($value){
-				return validatePrice($value);
+				return !validatePrice($value);
 			},
 			'date_dead' => function ($value){
-				return validateDate ($value);
+				return !validateDate ($value);
 			}		
 		];
 		$lot = 
