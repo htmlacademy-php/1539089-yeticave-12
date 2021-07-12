@@ -27,9 +27,7 @@ $header_categories = include_template(  //Подключаем шаблон ка
     'main_header_categories_list.php'
 );
 
-$categories_list = include_template(    //Подключаем шаблон категорий без картинок
-    'categories_list.php'
-);
+
 
 $main_content = include_template(       
     'main.php',
@@ -40,8 +38,12 @@ $main_content = include_template(
 $layout_content = include_template(             
     'layout.php',
     [
-        'content' => $main_content, 'categories_list' => $categories_list, 'page_name' => 'Главная', 'user_name' => 'Сергей'
-
+        'header' => $header,
+        'content' => $main_content, 
+        'footer' => $footer,
+        'page_name' => 'Главная', 
+        'user_name' => 'Сергей'
     ]
 );
 print($layout_content);
+

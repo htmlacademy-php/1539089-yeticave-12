@@ -3,10 +3,10 @@ date_default_timezone_set('Asia/Sakhalin'); // Устанавливаю врем
 require_once('helpers.php');
 
 
-$categories = categories_array();
+$categories = get_categories();
 
 foreach ($categories as $key => $val) : ?>
         <li class="promo__item promo__item--<?= htmlspecialchars($val['symbol_code']); ?>">
-                <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val['category_name']); ?></a>
+            <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val['category_name']); ?></a>
         </li>
 <?php endforeach; ?>

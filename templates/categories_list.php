@@ -4,10 +4,10 @@ require_once('helpers.php'); // Подключаю ф-ии
 // Подключение к БД
 
 
-$categories = categories_array();
+$categories = get_categories();
 
 foreach ($categories as $key => $val) : ?>
-    <li class="nav__item">
-        <a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val['category_name']); ?></a>
-    </li>
+	<li class="nav__item">
+		<a class="promo__link" href="pages/all-lots.html"><?= htmlspecialchars($val['category_name']); ?></a>
+	</li>
 <?php endforeach; ?>
