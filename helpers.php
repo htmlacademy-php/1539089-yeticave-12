@@ -176,7 +176,7 @@ function time_to_dead($lot_time)
 function connection()
 {  //Функция на подключение к БД
 
-	$con = mysqli_connect("127.0.0.1", "root", "root", "yety");
+	$con = mysqli_connect("127.0.0.1", "root", "", "yety");
 	mysqli_set_charset($con, "utf8"); // не уверен, применяется ли кодировка везде, куда я передаю(да, тк.к ресурс соединения устанавливается в $con)
 	if ($con == false) {
 		print("Ошибка подключения: " . mysqli_connect_error());
@@ -221,6 +221,14 @@ function validatePrice($val){
 function validateDate($val){
 	$date_now = date("Y-m-d");
 	return(is_date_valid($val) == 1 && $val > $date_now);
+}
+
+function validateEmail($val){
+	if(filter_var($val, FILTER_VALIDATE_EMAIL)){
+		return 1;
+	}else{
+		return 0;
+	}
 }
 
 
