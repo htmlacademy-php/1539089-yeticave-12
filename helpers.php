@@ -223,6 +223,10 @@ function validateDate($val){
 	return(is_date_valid($val) == 1 && $val > $date_now);
 }
 
+/* Валидация Email
+Проверяет, чтобы вводимое значение было действительным email адресом, в случае успешной валидации возвращает 1
+*/
+
 function validateEmail($val){
 	if(filter_var($val, FILTER_VALIDATE_EMAIL)){
 		return 1;

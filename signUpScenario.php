@@ -11,7 +11,8 @@
 
         $required = ['email', 'password', 'name', 'message'];
         $errors =[];
-        $rules = [
+        $rules = 
+        [
             'email' => function($value){
                 return !validateEmail($value);
             },
