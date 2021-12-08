@@ -60,13 +60,12 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 			if ($mime == 'image/png' || $mime == 'image/jpeg'){
 				move_uploaded_file($tmp_name, 'uploads/'.$filename);
 				$lot['image'] = 'uploads/'.$filename;	
-			}
-			else{
+			}else{
 				$errors['image'] = 'Выберите изображение в формате PNG или JPEG';
 			}
-		}else{
+			}else{
 			$errors['image'] = 'Вы не загрузили файл';
-		}
+			}
 		if (count($errors)) {
 			$add_lot_content = include_template(							//Передаем в шаблон с ошибками
 				'add-lot.php',

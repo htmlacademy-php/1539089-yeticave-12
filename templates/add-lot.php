@@ -38,7 +38,7 @@
 						</span>
 					</div>
 					<div class="form__item
-        <?php if (isset($errors['category_id'])) : ?>form__item--invalid<?php endif ?>">
+        			<?php if (isset($errors['category_id'])) : ?>form__item--invalid<?php endif ?>">
 						<!-- Если есть заданынй ключ, то срабатывает ошибка валидации-->
 
 						<label for="category">Категория <sup>*</sup></label>
@@ -66,13 +66,7 @@
 					<div class="form__input-file
 					<?php if (isset($errors['image'])) : ?>form__item--invalid<?php endif ?>">
 						<input class="visually-hidden" type="file" id="lot-img" name="image" value="">
-						<label for="lot-img">
-							<?php if (isset($path)){  
-								print 'Изображение добавлено';		//можно доработать, и выводить название файла, но для этого надо растянуть label
-							}else{
-							print 'Добавить';
-							}?>
-						</label>
+						<label for="lot-img">Добавить</label>
 						<span class="form__error"><? print $errors['image']?></span>
 					</div>
 				</div>
