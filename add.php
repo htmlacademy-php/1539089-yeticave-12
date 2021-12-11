@@ -5,8 +5,20 @@ $categories_list = include_template('categories_list.php');
 $categories_dropdown = get_categories();
 $categories_id_list = array_column($categories_dropdown, 'id');
 //if ($is_auth === 1){ //!!!Раскомментить для выполнения пункта ТЗ "Страница доступна только аутентифицированным пользователям."!!!
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+	$add_lot_content = include_template(					//При первом открытии страницы
+		'add-lot.php',												
+		[
+			'header' => $header,
+			'user_name' => 'Сергей',
+			'categories_list' => $categories_list,
+			'categories_dropdown' => $categories_dropdown,
+			'footer' => $footer
+		]
+	);
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		print_r ($add_lot_content);
+		exit();
+	}
 		$filename = 'uploads/' . uniqid() . '.img';  //называем файл изображения, сразу с папкой в которой будет лежать
 		$required = ['lot_name', 'category_id', 'description', 'start_price', 'rate_step', 'date_dead', 'image'];
 		$errors = [];
@@ -45,7 +57,6 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 				$rule = $rules[$key];
 				$errors[$key] = $rule($value);                               //присваиваем ключу в массиве ошибок ключ правила
 			}
-
 			if (in_array($key, $required) && empty($value)) {               // Проверяем на заполненность
 				$errors[$key] = "Поле $key надо заполнить";
 			}
@@ -57,58 +68,67 @@ $categories_id_list = array_column($categories_dropdown, 'id');
 		$filename = uniqid().$path;
 		$tmp_name = $_FILES['image']['tmp_name'];
 		$mime = mime_content_type($tmp_name);
-			if ($mime == 'image/png' || $mime == 'image/jpeg'){
+			if ($mime === 'image/png' || $mime === 'image/jpeg'){
 				move_uploaded_file($tmp_name, 'uploads/'.$filename);
 				$lot['image'] = 'uploads/'.$filename;	
 			}else{
 				$errors['image'] = 'Выберите изображение в формате PNG или JPEG';
 			}
 			}else{
-			$errors['image'] = 'Вы не загрузили файл';
+				$errors['image'] = 'Вы не загрузили файл';
 			}
-		if (count($errors)) {
-			$add_lot_content = include_template(							//Передаем в шаблон с ошибками
-				'add-lot.php',
-				[
-					'header' => $header,
-					'user_name' => 'Сергей',
-					'categories_list' => $categories_list,
-					'categories_dropdown' => $categories_dropdown,
-					'errors' => $errors,
-					'lot_name' => $lot['lot_name'],
-					'category_value' => $lot['category_id'],
-					'description_value' => $lot['description'],
-					'path' => $path,
-					'start_price' => $lot['start_price'],
-					'rate_step' => $lot['rate_step'],
-					'date_dead' => $lot['date_dead'],
-					'footer' => $footer
-				]
-			);
-		}
-		else {
+		if (count($errors) < 1) {
 			$sql = "INSERT INTO lots (date_create, lot_name, category_id, description, start_price, rate_step, date_dead, author_id, image)
 						VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)";
 			$stmt = db_get_prepare_stmt($con, $sql, $lot);  //выполняем подготовленное выражение
 			$res = mysqli_stmt_execute($stmt);
 			if ($res) {
 				$lot_id = mysqli_insert_id($con);
-
-			header('Location: lot.php?id='.$lot_id);  // перенаправляем на созданный лот
+			header('Location: lot.php?id='.$lot_id); // перенаправляем на созданный лот
+			exit(); 
+			} else {
+				$errors['execute_error'] = mysqli_error($con);
+				$add_lot_content = include_template(							//Передаем в шаблон с ошибками
+					'add-lot.php',
+					[
+						'header' => $header,
+						'user_name' => 'Сергей',
+						'categories_list' => $categories_list,
+						'categories_dropdown' => $categories_dropdown,
+						'errors' => $errors,
+						'lot_name' => $lot['lot_name'],
+						'category_value' => $lot['category_id'],
+						'description_value' => $lot['description'],
+						'path' => $path,
+						'start_price' => $lot['start_price'],
+						'rate_step' => $lot['rate_step'],
+						'date_dead' => $lot['date_dead'],
+						'footer' => $footer
+					]
+				);
+				print_r($add_lot_content);
+				print_r($errors);
+				exit();
 			}
 		}
-	}
-	else {
-		$add_lot_content = include_template(					//При первом открытии страницы
-			'add-lot.php',												
+		$add_lot_content = include_template(							//Передаем в шаблон с ошибками
+			'add-lot.php',
 			[
 				'header' => $header,
 				'user_name' => 'Сергей',
 				'categories_list' => $categories_list,
 				'categories_dropdown' => $categories_dropdown,
+				'errors' => $errors,
+				'lot_name' => $lot['lot_name'],
+				'category_value' => $lot['category_id'],
+				'description_value' => $lot['description'],
+				'path' => $path,
+				'start_price' => $lot['start_price'],
+				'rate_step' => $lot['rate_step'],
+				'date_dead' => $lot['date_dead'],
 				'footer' => $footer
 			]
 		);
-	}
-//}
-print $add_lot_content;
+		print_r($add_lot_content);
+		exit();
+	

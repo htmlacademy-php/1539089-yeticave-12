@@ -3,12 +3,18 @@
     date_default_timezone_set('Asia/Sakhalin');
     $con = connection();
 
-    $lotpage_categories = include_template (
-        'categories_list.php'
-    );
+    $sign_up_content = include_template(
+        'sign-up.php',
+            [
+                'header' => $header,
+                'categories_list' => $categories_list,
+                'footer' => $footer,
+            ]);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST'){
+        print_r ($sign_up_content);
+        exit();
+    }
         $required = ['email', 'password', 'name', 'message'];
         $errors =[];
         $rules = 
@@ -29,15 +35,16 @@
         $user = filter_input_array(INPUT_POST,
         [
             'email' => FILTER_DEFAULT,
-            'password' => FILTER_DEFAULT,
             'name' => FILTER_DEFAULT,
-            'message' => FILTER_DEFAULT],
+            'password' => FILTER_DEFAULT,
+            'message' => FILTER_DEFAULT
+        ],
             true
         );
 	
         $user_email = $user['email'];
         $sql_email = "SELECT id FROM users WHERE email = '$user_email'";
-        $res = mysqli_query($con, $sql_email);
+        $emailQuery = mysqli_query($con, $sql_email);
         
         
         foreach ($user as $key => $value) {
@@ -45,58 +52,56 @@
                 $rule = $rules[$key];
                 $errors[$key] = $rule($value);
             }
-
             if (in_array($key, $required) && empty($value)) {               // Проверяем на заполненность
 				$errors[$key] = "Поле $key надо заполнить";
 			}
-            if (mysqli_num_rows($res) > 0) {
+            if (mysqli_num_rows($emailQuery) > 0) {
                 $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
         };
     }
         $errors = array_filter($errors);  
 
-        if (count($errors)) {
-            $lotpage_content = include_template(
-                'sign-up.php',
-                    [
-                        'header' => $header,
-                        'lot_info' => $lot_info, 
-                        'categories_list' => $categories_list,
-                        'footer' => $footer,
-                        'errors' => $errors,
-						'email' => $user['email'],
-						'user_name' => $user['name'],
-						'message' => $user['message']
-                    ]
-            );
-        }
-        else {
+        if (count($errors) < 1) {
 
         $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT); // хэшируем пароль
-        $sql = "INSERT INTO users (registration_date, email, user_name, user_password, user_contact)
-						VALUES (NOW(), ?, ?, ?, ?)";
-			$stmt = db_get_prepare_stmt($con, $sql, $user);  //выполняем подготовленное выражение
-			$res = mysqli_stmt_execute($stmt);
-			if ($res) {
-				$user_id = mysqli_insert_id($con);
-            
-            
-            header('Location: pages/login.html');
-
+        $newUserSql = "INSERT INTO users (registration_date, email, user_name, user_password, user_contact)
+				       VALUES (NOW(), ?, ?, ?, ?)";
+			$statementNewUser = db_get_prepare_stmt($con, $newUserSql, $user);  //выполняем подготовленное выражение
+			
+            $executeNewUSer = mysqli_stmt_execute($statementNewUser);
+			if ($executeNewUSer) {
+                header('Location: pages/login.html');
+            exit();
+            } else {
+                $errors['execute_error'] = mysqli_error($con);
+                $sign_up_content = include_template(
+                    'sign-up.php',
+                        [
+                            'header' => $header,
+                            'categories_list' => $categories_list,
+                            'footer' => $footer,
+                            'errors' => $errors,
+                            'email' => $user['email'],
+                            'user_name' => $user['name'],
+                            'message' => $user['message']
+                        ]
+                );
+                print_r($sign_up_content);
+                exit();
             }
-    
         }
-    } else {
-    $lotpage_content = include_template(
-        'sign-up.php',
-            [
-                'header' => $header,
-                'lot_info' => $lot_info, 
-                'categories_list' => $categories_list,
-                'footer' => $footer,
-            ]
-    );
-    
-    }
-print ($lotpage_content);
-?>
+
+        $sign_up_content = include_template(
+            'sign-up.php',
+                [
+                    'header' => $header,
+                    'categories_list' => $categories_list,
+                    'footer' => $footer,
+                    'errors' => $errors,
+					'email' => $user['email'],
+					'user_name' => $user['name'],
+					'message' => $user['message']
+                   ]
+        );
+        print_r ($sign_up_content);
+        exit();

@@ -15,9 +15,7 @@ function lot_price($x)
 		<h2 class="promo__title">Нужен стафф для катки?</h2>
 		<p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
 		<ul class="promo__list">
-			<?php  //получаем список категорий с версткой из шаблона
-			print $header_categories
-			?>
+			<?=$header_categories;?>
 		</ul>
 	</section>
 	<section class="lots">
@@ -32,9 +30,7 @@ function lot_price($x)
 				$date = (time_to_dead($val['date_dead']));
 				if ($date[0] > 0 or ($date[0] >= 0 and $date[1] > 0)) :;
 				?>
-
 					<li class="lots__item lot">
-
 						<div class="lot__image">
 							<img src="<?= htmlspecialchars($val['image']); ?>" width="350" height="260" alt="">
 						</div>
@@ -47,16 +43,12 @@ function lot_price($x)
 									<span class="lot__cost"><?= htmlspecialchars(lot_price($val['start_price'])); ?></span>
 								</div>
 								<div class="lot__timer timer 
-                            <?php
-										// Добавляем класс, в зависимости от возвращаемого значения
+                            		<?php	// Добавляем класс, в зависимости от возвращаемого значения
 										if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
-									<?php
-									print htmlspecialchars($date[0] . ':' . $date[1]);
-									?>
+									<?=htmlspecialchars($date[0] . ':' . $date[1]);?>
 								</div>
 							</div>
 						</div>
-
 					</li>
 				<?php endif; ?>
 			<?php endforeach; ?>

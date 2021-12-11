@@ -15,15 +15,12 @@ require_once('helpers.php');
 
     <div class="page-wrapper">
 
-        
         <?= $header; ?>
 
         <main>
             <nav class="nav">
                 <ul class="nav__list container">
-                    <?php 
-                    print $categories_list;
-                    ?>
+                    <?= $categories_list;?>
             </nav>
             <section class="lot-item container">
                 <h2>404 Страница не найдена</h2>

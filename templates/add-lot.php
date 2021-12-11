@@ -22,33 +22,30 @@
 				</ul>
 			</nav>
 			<form class="form form--add-lot container 
-			<?php if (isset($errors)):?>form--invalid<?php endif;?>"  
+			<?= isset($errors) ? 'form--invalid' : '' ?>"  
 			action="add.php" method="post" enctype="multipart/form-data">
 				<!--Добавляем form--invalid  если были ошибки валидации-->
 				<h2>Добавление лота</h2>
 				<div class="form__container-two">
 					<div class="form__item 
-					<?php if (isset($errors['lot_name'])):?>form__item--invalid<?php endif;?>">
-						
+					<?= isset($errors['lot_name']) ? 'form__item--invalid' : '' ?>"> <!--Если значением первого подвыражения является true (не ноль), 
+					то выполняется второе подвыражение, которое и будет результатом условного выражения. В противном случае будет выполнено третье подвыражение и его значение будет результатом.-->
 						<label for="lot-name">Наименование <sup>*</sup></label>
-						<input id="lot-name" type="text" name="lot_name" placeholder='Введите наименование лота' value=<? print $lot_name ?>>
+						<input id="lot-name" type="text" name="lot_name" placeholder='Введите наименование лота' value=<?= htmlspecialchars($lot_name ?? '');?>>
 						<span class="form__error">
-							<!-- Это span ошибки -->
 							Введите наименование лота
 						</span>
 					</div>
 					<div class="form__item
-        			<?php if (isset($errors['category_id'])) : ?>form__item--invalid<?php endif ?>">
-						<!-- Если есть заданынй ключ, то срабатывает ошибка валидации-->
-
+        			<?= isset($errors['category_id']) ? 'form__item--invalid' : '' ?>">
 						<label for="category">Категория <sup>*</sup></label>
 						<select id="category" name="category_id">
 							<option>Выберите категорию</option>
 							<?php
 							foreach ($categories_dropdown as $key => $val) : ?>
-								<option value="<?= $val['id']; ?>" <?php if ($val['id'] == $category_value) : ?>selected<?php endif; ?>>
+								<option value="<?= $val['id']; ?>" <?php if ($val['id'] === $category_value) : ?>selected<?php endif; ?>>
 									<!--сохраняем выбор-->
-									<?= htmlspecialchars($val['category_name']); ?>
+									<?= htmlspecialchars($val['category_name']) ?? '' ; ?>
 								</option>
 							<?php endforeach; ?>
 						</select>
@@ -56,15 +53,15 @@
 					</div>
 				</div>
 				<div class="form__item form__item--wide
-				<?php if (isset($errors['description'])) : ?>form__item--invalid<?php endif ?>">
+				<?= isset($errors['description']) ? 'form__item--invalid' : '' ?>">
 					<label for="message">Описание <sup>*</sup></label>
-					<textarea id="message" name="description" placeholder="Напишите описание лота"><?=$description_value?></textarea>
+					<textarea id="message" name="description" placeholder="Напишите описание лота"><?= htmlspecialchars($description_value ?? ''); ?></textarea>
 					<span class="form__error">Напишите описание лота</span>
 				</div>
 				<div class="form__item form__item--file">
 					<label>Изображение <sup>*</sup></label>
 					<div class="form__input-file
-					<?php if (isset($errors['image'])) : ?>form__item--invalid<?php endif ?>">
+					<?= isset($errors['image']) ? 'form__item--invalid' : '' ?>">
 						<input class="visually-hidden" type="file" id="lot-img" name="image" value="">
 						<label for="lot-img">Добавить</label>
 						<span class="form__error"><? print $errors['image']?></span>
@@ -72,25 +69,25 @@
 				</div>
 				<div class="form__container-three">
 					<div class="form__item form__item--small
-					<?php if (isset($errors['start_price'])) : ?>form__item--invalid<?php endif ?>">
+					<?= isset($errors['start_price']) ? 'form__item--invalid' : '' ?>">
 						<label for="lot-rate">Начальная цена <sup>*</sup></label>
-						<input id="lot-rate" type="text" name="start_price" placeholder="0" value=<? print $start_price ?>>
+						<input id="lot-rate" type="text" name="start_price" placeholder="0" value=<?= htmlspecialchars($start_price ?? ''); ?>>
 						<span class="form__error">Введите начальную цену</span>
 					</div>
 					<div class="form__item form__item--small
-					<?php if (isset($errors['rate_step'])) : ?>form__item--invalid<?php endif ?>">
+					<?= isset($errors['rate_step']) ? 'form__item--invalid' : '' ?>">
 						<label for="lot-step">Шаг ставки <sup>*</sup></label>
-						<input id="lot-step" type="text" name="rate_step" placeholder="0" value=<? print $rate_step ?>>
+						<input id="lot-step" type="text" name="rate_step" placeholder="0" value=<?= htmlspecialchars($rate_step ?? ''); ?>>
 						<span class="form__error">Введите шаг ставки</span>
 					</div>
 					<div class="form__item
-					<?php if (isset($errors['date_dead'])) : ?>form__item--invalid<?php endif ?>">
+					<?= isset($errors['date_dead']) ? 'form__item--invalid' : '' ?>">
 						<label for="lot-date">Дата окончания торгов <sup>*</sup></label>
-						<input class="form__input-date" id="lot-date" type="text" name="date_dead" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value=<? print $date_dead ?>>
+						<input class="form__input-date" id="lot-date" type="text" name="date_dead" placeholder="Введите дату в формате ГГГГ-ММ-ДД" value=<?= htmlspecialchars($date_dead ?? ''); ?>>
 						<span class="form__error">Введите дату завершения торгов в формате ГГГГ-ММ-ДД</span>
 					</div>
 				</div>
-				<span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
+				<span class="form__error form__error--bottom"><?= isset($errors['execute_error']) ? 'Произошла ошибка с вашим запросом, код ошибки: ' . $errors['execute_error'] : 'Пожалуйста, исправьте ошибки в форме.' ?></span>
 				<button type="submit" class="button">Добавить лот</button>
 			</form>
 		</main>

@@ -13,22 +13,20 @@
 
 <body>
 
-  <div class="page-wrapper">
+    <div class="page-wrapper">
 
     <?= $header; ?>
 
     <main>
         <nav class="nav">
             <ul class="nav__list container">
-            <?php 
-                print $lotpage_categories;
-            ?>
+            <?=$lotpage_categories;?>
             </ul>
         </nav>
         <section class="lot-item container">
         <?php $date = (time_to_dead($val['date_dead'])); ?>
         <h2>
-            <?php print(htmlspecialchars($val['lot_name'])); ?>
+            <?=(htmlspecialchars($val['lot_name'])); ?>
         </h2>
         <div class="lot-item__content">
             <div class="lot-item__left">
@@ -44,9 +42,7 @@
                 <?php
                     if ($date[0] < 1) : ?>timer--finishing<?php endif ?>">
                     <!-- Добавляем класс в зависимости от возвращаемого знаячения -->
-                <?php
-                    print htmlspecialchars($date[0] . ':' . $date[1]);
-                ?>
+                <?=htmlspecialchars($date[0] . ':' . $date[1]);?>
             </div>
             <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
@@ -67,15 +63,14 @@
                     </div>
                 </div>
                 <!-- Тут должна быть форма для ставки, но в задании сказано его не реализовывать-->
-              </div>
-              <!-- Тут должна быть история ставок, но в задании сказано его не реализовывать, но я могу попробовать))-->
-      </section>
+                </div>
+                <!-- Тут должна быть история ставок, но в задании сказано его не реализовывать, но я могу попробовать))-->
+        </section>
     </main>
-  </div>
+    </div>
 
-    <?= $footer; ?>
+<?= $footer; ?>
 
 </body>
 <?php endforeach; ?>
-
 </html>
