@@ -1,5 +1,5 @@
 <?php
-require_once('helpers.php');
+require_once 'helpers.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -15,12 +15,12 @@ require_once('helpers.php');
 
     <div class="page-wrapper">
 
-        <?= $header; ?>
+        <?php echo $header; ?>
 
         <main>
             <nav class="nav">
                 <ul class="nav__list container">
-                    <?= $categories_list;?>
+                    <?php echo $categories_list; ?>
             </nav>
             <section class="lot-item container">
                 <h2>404 Страница не найдена</h2>
@@ -30,7 +30,7 @@ require_once('helpers.php');
 
     </div>
 
-    <?=$footer; ?>
+    <?php echo $footer; ?>
 
 </body>
 

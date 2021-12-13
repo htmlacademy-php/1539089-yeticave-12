@@ -1,0 +1,8 @@
+{
+  "workbench.startupEditor": "none",
+  "git.ignoreMissingGitWarning": true,
+  "php.executablePath" : "E:\\OpenServer\\modules\\php\\PHP_7.1\\php.exe",
+  "phpSniffer.standard": "PSR-12",
+  "phpSniffer.autoDetect": true,
+  "phpSniffer.executablesFolder": "E:\\OpenServer\\userdata\\composer\\vendor\\bin"
+}
