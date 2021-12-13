@@ -1,16 +1,17 @@
 <?php
+
 date_default_timezone_set('Asia/Sakhalin'); // Устанавливаю время на время БД, иначе начинает некорректно считать минуты
-require_once('helpers.php');
+require_once 'helpers.php';
 
 $con = connection(); // Получаем подключение к БД
 
 // Запрос на получение лотов,
 
-$query_lots = "SELECT lots.*, category_name, rate_sum  
-FROM lots 
+$query_lots = "SELECT lots.*, category_name, rate_sum
+FROM lots
 INNER JOIN categories
 ON category_id = categories.id
-LEFT JOIN rates 
+LEFT JOIN rates
 ON rates.id = (
     SELECT ra.id
     FROM rates ra
@@ -29,21 +30,20 @@ $header_categories = include_template(  //Подключаем шаблон ка
 
 
 
-$main_content = include_template(       
+$main_content = include_template(
     'main.php',
     [
         'lots' => $lots, 'header_categories' => $header_categories
     ]
 );
-$layout_content = include_template(             
+$layout_content = include_template(
     'layout.php',
     [
         'header' => $header,
-        'content' => $main_content, 
+        'content' => $main_content,
         'footer' => $footer,
-        'page_name' => 'Главная', 
+        'page_name' => 'Главная',
         'user_name' => 'Сергей'
     ]
 );
 print($layout_content);
-

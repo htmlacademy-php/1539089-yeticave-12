@@ -2,8 +2,9 @@
 
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
-        
-        <a class="main-header__logo" href="index.php"> <!-- можно сделать условие, чтобы сравнивать url и на главной ссылку не добавлять -->
+
+        <a class="main-header__logo" href="index.php">
+            <!-- можно сделать условие, чтобы сравнивать url и на главной ссылку не добавлять -->
             <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru" autocomplete="off">
@@ -18,7 +19,7 @@
 
             <?php if ($is_auth === 1) : ?>
                 <div class="user-menu__logged">
-                    <p><?= $user_name; ?></p>
+                    <p>Сергей</p>
                     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                     <a class="user-menu__logout" href="#">Выход</a>
                 </div>
@@ -26,7 +27,7 @@
             <?php else : ?>
                 <ul class="user-menu__list">
                     <li class="user-menu__item">
-                        <a href="#">Регистрация</a>
+                        <a href="signUpScenario.php">Регистрация</a>
                     </li>
                     <li class="user-menu__item">
                         <a href="#">Вход</a>
@@ -35,5 +36,5 @@
             <?php endif; ?>
         </nav>
     </div>
-    
+
 </header>
