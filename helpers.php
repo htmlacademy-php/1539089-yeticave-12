@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
@@ -248,15 +249,16 @@ $is_auth = rand(0, 1);  //Определил здесь, для выполнен
 
 
 
-$header = include_template(        //Подключение шаблона header(нужно сделать кнопку неактивной, когда находимcя на главной)
-    'header.php',
-    [
-        'is_auth' => $is_auth
-    ]
-);
 
 $categories_list = include_template(    //Подключаем шаблон категорий без картинок
     'categories_list.php'
+);
+
+$header = include_template(        //Подключение шаблона header(нужно сделать кнопку неактивной, когда находимcя на главной)
+    'header.php',
+    [
+        'is auth' => $is_auth
+    ]
 );
 
 $footer = include_template(
@@ -279,4 +281,19 @@ function error404($header, $footer)            // вывод 404, вызывае
     );
     http_response_code(404);
     print($error_404);
+}
+
+
+function error403($header, $footer)
+{
+
+    $error403 = include_template(
+        '403.php',
+        [
+            'header' => $header,
+            'footer' => $footer
+        ]
+    );
+    http_response_code(404);
+    print($error403);
 }

@@ -6,7 +6,7 @@ require_once '../helpers.php';
 
 <head>
     <meta charset="UTF-8">
-    <title>404 Страница не найдена</title>
+    <title>403 Ошибка доступа</title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -23,8 +23,8 @@ require_once '../helpers.php';
                     <?php echo $categories_list; ?>
             </nav>
             <section class="lot-item container">
-                <h2>404 Страница не найдена</h2>
-                <p>Данной страницы не существует на сайте.</p>
+                <h2>403 Ошибка доступа</h2>
+                <p>Для добавления лота пожалуйста зарегестрируйтесь на сайте</p>
             </section>
         </main>
 
