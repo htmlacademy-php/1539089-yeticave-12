@@ -56,6 +56,7 @@ $lot =
         ],
         true
     );
+$lot ['author_id'] = $_SESSION['id'];
 foreach ($lot as $key => $value) {
     if (isset($rules[$key])) {
         $rule = $rules[$key];
@@ -65,6 +66,7 @@ foreach ($lot as $key => $value) {
         $errors[$key] = "Поле $key надо заполнить";
     }
 }
+
 $errors = array_filter($errors);        //Оставляем только нужные значения(удаляем все пустые)
 
 $errors['image'] = 'Вы не загрузили файл';
@@ -84,7 +86,7 @@ if (!empty($_FILES['image']['name'])) {
 }
 if (count($errors) < 1) {
     $sql = "INSERT INTO lots (date_create, lot_name, category_id, description, start_price, rate_step, date_dead, author_id, image)
-						VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)";
+						VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = db_get_prepare_stmt($con, $sql, $lot);  //выполняем подготовленное выражение
     $res = mysqli_stmt_execute($stmt);
     if ($res) {

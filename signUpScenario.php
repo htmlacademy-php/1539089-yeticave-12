@@ -65,14 +65,14 @@ foreach ($user as $key => $value) {
 $errors = array_filter($errors);
 
 if (count($errors) < 1) {
-    $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT); // хэшируем пароль
+    $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
     $newUserSql = "INSERT INTO users (registration_date, email, user_name, user_password, user_contact)
 				       VALUES (NOW(), ?, ?, ?, ?)";
     $statementNewUser = db_get_prepare_stmt($con, $newUserSql, $user);  //выполняем подготовленное выражение
 
     $executeNewUSer = mysqli_stmt_execute($statementNewUser);
     if ($executeNewUSer) {
-        header('Location: pages/login.html');
+        header('Location: loginScript.php');
         exit();
     }
     $errors['execute_error'] = mysqli_error($con);
